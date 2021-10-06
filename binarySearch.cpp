@@ -1,45 +1,32 @@
-#include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 
-bool binarySearch(vector<int> &arr, int target, int low, int high) {
 
-    // if low becomes greater than high return false
-    if (low > high)
-        return false;
+int binarySearch(int arr[], int l, int r, int x)
+{
+	if (r >= l) {
+		int mid = l + (r - l) / 2;
 
-    int mid = low + (high - low) / 2;
-    // if target equals the array element at mid return true
+		if (arr[mid] == x)
+			return mid;
+		if (arr[mid] > x)
+			return binarySearch(arr, l, mid - 1, x);
 
-    if (arr[mid] == target)
-        return true;
-    // if target is greater that the array element at mid : low = mid + 1
+	
+		return binarySearch(arr, mid + 1, r, x);
+	}
 
-    else if (arr[mid] < target)
-        return binarySearch(arr, target, mid + 1, high);
-    // if target is lesser that the array element at mid : high = mid - 1
-    else
-        return binarySearch(arr, target, low, mid - 1);
+
+	return -1;
 }
 
-int main() {
-    // array size
-    int array_size;
-    cin >> array_size;
-
-    // array
-    vector<int> arr(array_size);
-    // take vector input
-    for (int index = 0; index < array_size; index++)
-        cin >> arr[index];
-
-    // element to search
-    int search_key;
-    cin >> search_key;
-
-    if (binarySearch(arr, search_key, 0, array_size - 1) == true)
-        cout << "FOUND\n";
-    else
-        cout << "NOT FOUND";
-    return 0;
+int main(void)
+{
+	int arr[] = { 2, 3, 4, 10, 40 };
+	int x = 10;
+	int n = sizeof(arr) / sizeof(arr[0]);
+	int result = binarySearch(arr, 0, n - 1, x);
+	(result == -1) ? cout << "Element is not present in array"
+				: cout << "Element is present at index " << result;
+	return 0;
 }
